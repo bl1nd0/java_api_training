@@ -22,7 +22,7 @@ public class Tests {
     @Test
     public void testPingAPI() throws IOException {
         Server s = new Server(9876);
-        s.StartServer();
+        s.startServer();
         URL url = new URL("http://localhost:9876/ping");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
@@ -30,13 +30,13 @@ public class Tests {
         String responseBody = new BufferedReader(new InputStreamReader(con.getInputStream()))
             .lines().collect(Collectors.joining("\n"));
         assertEquals("OK",responseBody);
-        s.CloseServer();
+        s.closeServer();
     }
 
     @Test
     public void testStartAPI404() throws IOException, InterruptedException {
         Server s = new Server(1234);
-        s.StartServer();
+        s.startServer();
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:1234/api/game/start"))
             .setHeader("Accept", "application/json")
@@ -47,12 +47,12 @@ public class Tests {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(404, response.statusCode());
         assertEquals("Not Found",response.body());
-        s.CloseServer();
+        s.closeServer();
     }
     @Test
     public void testStartAPI400() throws IOException, InterruptedException {
         Server s = new Server(4444);
-        s.StartServer();
+        s.startServer();
         String template = "{\"IA\":\"1\",\"url\":\"http://localhost:4334\",\"message\":\"bjr\"}";
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:4444/api/game/start"))
@@ -64,12 +64,12 @@ public class Tests {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(400,response.statusCode());
         assertEquals("Bad Request",response.body());
-        s.CloseServer();
+        s.closeServer();
     }
     @Test
     public void testStartAPI202() throws IOException, InterruptedException {
         Server s = new Server(4321);
-        s.StartServer();
+        s.startServer();
         String template = "{\"id\":\"1\",\"url\":\"http://localhost:4334\",\"message\":\"bjr\"}";
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:4321/api/game/start"))
@@ -82,12 +82,12 @@ public class Tests {
         assertTrue(response.body().contains("id"));
         assertTrue(response.body().contains("url"));
         assertTrue(response.body().contains("message"));
-        s.CloseServer();
+        s.closeServer();
     }
     @Test
     public void testFireAPI404() throws IOException, InterruptedException {
         Server s = new Server(9876);
-        s.StartServer();
+        s.startServer();
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:9876/api/game/fire"))
             .setHeader("Accept", "application/json")
@@ -98,12 +98,12 @@ public class Tests {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(404, response.statusCode());
         assertEquals("Not Found",response.body());
-        s.CloseServer();
+        s.closeServer();
     }
     @Test
     public void testFireAPI400() throws IOException, InterruptedException {
         Server s = new Server(7777);
-        s.StartServer();
+        s.startServer();
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:7777/api/game/fire?admin=true"))
             .setHeader("Content-Type", "application/json")
@@ -113,12 +113,12 @@ public class Tests {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(400,response.statusCode()); // miss sunk hit
         assertEquals("Bad Request",response.body());
-        s.CloseServer();
+        s.closeServer();
     }
     @Test
     public void testFireAPI202() throws IOException, InterruptedException {
         Server s = new Server(9876);
-        s.StartServer();
+        s.startServer();
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:9876/api/game/fire?cell=B2"))
             .setHeader("Content-Type", "application/json")
@@ -129,17 +129,17 @@ public class Tests {
         assertEquals(202,response.statusCode()); // miss sunk hit
         String[] temp = {"miss","sunk","hit"};
         assertTrue(response.body().contains(temp[0]) || response.body().contains(temp[1]) || response.body().contains(temp[2]));
-        s.CloseServer();
+        s.closeServer();
     }
 
     @Test
     public void testNewPostRq() throws IOException, InterruptedException {
         Server s = new Server(9876);
-        s.StartServer();
+        s.startServer();
         String[] args = {"0","http://localhost:9876"};
         PostRq p = new PostRq(args,8576);
-        assertTrue(p.GetResponse().contains("id") && p.GetResponse().contains("url") && p.GetResponse().contains("message"));
-        s.CloseServer();
+        assertTrue(p.getResponse().contains("id") && p.getResponse().contains("url") && p.getResponse().contains("message"));
+        s.closeServer();
     }
 
     @Test
@@ -147,15 +147,15 @@ public class Tests {
         Server s = new Server(9876);
         PlayerBoard p = new PlayerBoard(9876,s);
         assertEquals(0,p.GetBoardVal(0,0));
-        p.Indexx();
-        p.SetBoardTo0(1,0);
+        p.indexx();
+        p.setBoardTo0(1,0);
         assertEquals(0,p.GetBoardVal(1,0));
-        assertEquals(1,p.GetInc());
+        assertEquals(1,p.getInc());
         for(int i = 0;i < 10;i++){
             for(int j = 0;j < 10; j++){
-                p.SetBoardTo0(i,j);
+                p.setBoardTo0(i,j);
             }
         }
-        assertTrue(!p.ShipLeft());
+        assertTrue(!p.shipLeft());
     }
 }

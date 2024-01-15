@@ -27,9 +27,9 @@ class GameStartHttpHandler implements HttpHandler {
         else {
             String s = requestBody.toString().replaceAll("\"","");
             if(requestBody.toString().contains("{"))
-                _b.SetEnnemyPort(Integer.parseInt(s.split(",")[1].split(":")[3]));
+                _b.setEnnemyPort(Integer.parseInt(s.split(",")[1].split(":")[3]));
             else
-                _b.SetEnnemyPort(Integer.parseInt(requestBody.toString().split("&")[1].split("localhost%3A")[1]));
+                _b.setEnnemyPort(Integer.parseInt(requestBody.toString().split("&")[1].split("localhost%3A")[1]));
             sendResponse(exchange, 202, createJson(requestBody.toString()));
         }
     }
@@ -55,9 +55,9 @@ class GameStartHttpHandler implements HttpHandler {
         os.close();
         System.out.println(message);
         try {
-            String s = _b.Indexx();
+            String s = _b.indexx();
             System.out.println(s);
-            _b.Play(s);
+            _b.play(s);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

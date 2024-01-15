@@ -31,7 +31,7 @@ public class GameFire implements HttpHandler {
     }
     public String constructResponse(String cell){
         String state = navyFormatToCoords(cell);
-        boolean shipleft = b.ShipLeft();
+        boolean shipleft = b.shipLeft();
         JSONObject json = new JSONObject();
         json.put("consequence",state);
         json.put("shipLeft",shipleft);
@@ -50,7 +50,7 @@ public class GameFire implements HttpHandler {
             return "miss";
         }
         else{
-            b.SetBoardTo0(col,line);
+            b.setBoardTo0(col,line);
             int res = isSunked(col,line);
             if(res == 1)
                 return "sunk";
@@ -74,13 +74,13 @@ public class GameFire implements HttpHandler {
         os.write(message.getBytes());
         System.out.println(message);
         os.close();
-        if(!b.ShipLeft()){
+        if(!b.shipLeft()){
             System.out.println("Dommage Vous Perdez Cette Partie !");
-            s.CloseServer();
+            s.closeServer();
             System.exit(0);
         }
         else {
-            try {b.Play(b.Indexx());}
+            try {b.play(b.indexx());}
             catch (InterruptedException e) {throw new RuntimeException(e);}
         }
     }

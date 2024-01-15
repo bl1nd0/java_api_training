@@ -77,7 +77,7 @@ public class PlayerBoard {
         JSONObject json = new JSONObject(response.body());
         if (Objects.equals(json.get("shipLeft").toString(), "false")){
             System.out.println("Bravo Vous Avez Gagné");
-            s.CloseServer();
+            s.closeServer();
             System.exit(0);
         }
         else{
