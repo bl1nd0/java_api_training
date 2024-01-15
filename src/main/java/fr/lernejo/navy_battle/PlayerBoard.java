@@ -31,21 +31,21 @@ public class PlayerBoard {
             {0,1,0,0,0,0,0,0,0,0}};
     }
 
-    public String Indexx(){
+    public String indexx(){
         String res = this.BoardOptions[this.inc[0]];
         this.inc[0] += 1;
         return res;
     }
-    public int GetInc(){
+    public int getInc(){
         return this.inc[0];
     }
-    public void SetEnnemyPort(int port){
+    public void setEnnemyPort(int port){
         this.port_ennemi[0] = port;
     }
     public int GetBoardVal(int col, int line){
         return board[line][col];
     }
-    public boolean ShipLeft(){
+    public boolean shipLeft(){
         boolean res = false;
         for (int[] a:board) {
             for (int b:a){
@@ -60,7 +60,7 @@ public class PlayerBoard {
         }
         return res;
     }
-    public void SetBoardTo0(int col, int line){
+    public void setBoardTo0(int col, int line){
         board[line][col] = 0;
     }
 
@@ -68,7 +68,7 @@ public class PlayerBoard {
         return myport;
     }
 
-    public void Play(String cell) throws IOException, InterruptedException {
+    public void play(String cell) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:" + this.port_ennemi[0] + "/api/game/fire?cell=" + cell)).setHeader("Accept", "application/json").GET().build();
         HttpResponse<String> response = null;

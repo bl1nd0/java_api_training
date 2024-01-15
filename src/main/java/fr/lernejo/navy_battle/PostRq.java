@@ -21,7 +21,7 @@ public class PostRq {
         response = client.send(request, HttpResponse.BodyHandlers.ofString());
         _response = response.body();
     }
-    public String GetResponse(){
+    public String getResponse(){
         return _response;
     }
 }

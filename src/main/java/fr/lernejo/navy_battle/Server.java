@@ -19,12 +19,12 @@ public class Server {
         server.createContext("/api/game/start", new GameStartHttpHandler(port, b));
         server.createContext("/api/game/fire", new GameFire(b,this));
     }
-    public PlayerBoard StartServer(){
+    public PlayerBoard startServer(){
         server.start();
         return b;
     }
 
-    public void CloseServer(){
+    public void closeServer(){
         server.stop(0);
     }
 }
