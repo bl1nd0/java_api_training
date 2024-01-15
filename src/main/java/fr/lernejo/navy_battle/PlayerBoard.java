@@ -42,7 +42,7 @@ public class PlayerBoard {
     public void setEnnemyPort(int port){
         this.port_ennemi[0] = port;
     }
-    public int GetBoardVal(int col, int line){
+    public int getBoardVal(int col, int line){
         return board[line][col];
     }
     public boolean shipLeft(){

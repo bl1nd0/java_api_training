@@ -146,10 +146,10 @@ public class Tests {
     public  void testPlayerBoardMethods() throws IOException{
         Server s = new Server(9876);
         PlayerBoard p = new PlayerBoard(9876,s);
-        assertEquals(0,p.GetBoardVal(0,0));
+        assertEquals(0,p.getBoardVal(0,0));
         p.indexx();
         p.setBoardTo0(1,0);
-        assertEquals(0,p.GetBoardVal(1,0));
+        assertEquals(0,p.getBoardVal(1,0));
         assertEquals(1,p.getInc());
         for(int i = 0;i < 10;i++){
             for(int j = 0;j < 10; j++){
